@@ -1,1 +1,3 @@
 # scalecord
+
+DO NOT USE THIS! THIS IS JUST FOR ME!
