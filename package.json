@@ -4,7 +4,8 @@
   "description": "DO NOT USE THIS! THIS IS JUST FOR ME!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ts-node packages/rest/test.ts",
+    "tscw": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/Skillz4Killz/scalecord/issues"
   },
-  "homepage": "https://github.com/Skillz4Killz/scalecord#readme"
+  "homepage": "https://github.com/Skillz4Killz/scalecord#readme",
+  "dependencies": {
+    "node-fetch": "^3.2.4",
+    "typescript": "^4.6.4"
+  },
+  "devDependencies": {
+    "ts-node": "^10.7.0"
+  }
 }

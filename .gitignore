@@ -1,3 +1,5 @@
+packages/rest/test.ts
+
 # Logs
 logs
 *.log
