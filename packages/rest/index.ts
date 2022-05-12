@@ -89,7 +89,7 @@ export class RestManager {
         Authorization: this.botToken,
         "X-Audit-Log-Reason": reason ? encodeURIComponent(reason) : "",
       },
-    });
+    }).then((response) => response.body?.cancel());
   }
 }
 
