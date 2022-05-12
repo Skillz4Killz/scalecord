@@ -131,6 +131,7 @@ export enum OverwriteType {
   member,
 }
 
+// FROM DISCORDENO
 /** https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags */
 export enum BitwisePermissionFlags {
   /** Allows creation of instant invites */

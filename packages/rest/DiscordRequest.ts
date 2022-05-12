@@ -1,5 +1,4 @@
-import RestManager from "./index";
-import fetch from "node-fetch";
+import RestManager from ".";
 
 export class DiscordRequest {
   /** The rest manager instance */
@@ -25,7 +24,8 @@ export class DiscordRequest {
     this.manager = manager;
     this.url = options.url;
     this.method = options.method;
-    
+    this.headers.Authorization = `Bot ${manager.token}`;
+
     if (reason) this.setReasonHeader(reason);
     if (payload) this.setBody(payload);
   }
@@ -39,7 +39,7 @@ export class DiscordRequest {
   setBody(body: Record<string, unknown>) {
     this.body = body;
     if (body.attachments) {
-      // TODO: attachments 
+      // TODO: attachments
     } else {
       this.headers["Content-Type"] = "application/json";
     }
@@ -50,13 +50,18 @@ export class DiscordRequest {
     return await fetch(this.url, {
       method: this.method,
       body: this.body ? JSON.stringify(this.body) : undefined,
-      headers: this.headers
-    }).then((response) => {
-      return response.json()
-    }).catch(error => {
-      // TODO: error handling
-      console.error(error)
+      headers: this.headers,
     })
+      .then((response) => {
+        // TODO: grafana metrics
+        // TODO: headers handling
+        return response.json();
+      })
+      .catch((error) => {
+        // TODO: grafana metrics
+        // TODO: error handling
+        console.error(error);
+      });
   }
 }
 

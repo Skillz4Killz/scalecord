@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/Skillz4Killz/scalecord#readme",
   "dependencies": {
-    "node-fetch": "^3.2.4",
     "typescript": "^4.6.4"
   },
   "devDependencies": {
