@@ -13,6 +13,11 @@ export class Endpoints {
         return `${this.manager.baseURL}/v${this.manager.version}`;
     }
 
+    /** The base endpoint for channel related endpoints. */
+    channelsBase(channelId: Snowflake): string {
+        return `${this.baseURL}/channels/${channelId}`
+    }
+
     /** The base endpoint for guild related requests */
     guildsBase(guildId: Snowflake): string {
         return `${this.baseURL}/guilds/${guildId}`

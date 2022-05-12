@@ -55,11 +55,30 @@ export class RestManager {
     );
   }
 
+  /** Delete a channel */
+  async deleteChannel(channelId: Snowflake, reason?: string) {
+    return await this.delete(this.endpoints.channelsBase(channelId), reason);
+  }
+
+  /** Send a POST request to the api. */
   async post(url: string, options: Record<string, unknown>, reason?: string) {
     const request = new DiscordRequest(
       this,
       { url, method: "POST" },
       options,
+      reason
+    );
+
+    return await request.execute();
+  }
+
+  /** Send a DELETE request to the api */
+  async delete(url: string, reason?: string) {
+    const request = new DiscordRequest(
+      this,
+      { url, method: "DELETE" },
+      // DELETE SHOULD NOT HAVE A BODY
+      undefined,
       reason
     );
 
