@@ -1,4 +1,3 @@
-import DiscordRequest from "./DiscordRequest";
 import Endpoints from "./Endpoints";
 
 export class RestManager {
