@@ -14,7 +14,7 @@ export class RestManager {
 
   /** The base url for the api */
   get baseURL(): string {
-    return this.options.baseURL || "https://discord.com/api";
+    return this.options.baseURL;
   }
 
   /** The api version to use to make requests. */
@@ -25,6 +25,11 @@ export class RestManager {
   /** The bot token to use */
   get token(): string {
     return this.options.token;
+  }
+
+  /** The bot token with the Bot prefix to use */
+  get botToken(): string {
+    return `Bot ${this.token}`;
   }
 
   /** Whether or not to enable debug mode. */
@@ -62,27 +67,29 @@ export class RestManager {
 
   /** Send a POST request to the api. */
   async post(url: string, options: Record<string, unknown>, reason?: string) {
-    const request = new DiscordRequest(
-      this,
-      { url, method: "POST" },
-      options,
-      reason
-    );
-
-    return await request.execute();
+    return await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.botToken,
+        "X-Audit-Log-Reason": reason ? encodeURIComponent(reason) : "",
+      },
+      body: JSON.stringify(options),
+    })
+      .then((res) => res.json())
+      .catch(console.error);
   }
 
   /** Send a DELETE request to the api */
   async delete(url: string, reason?: string) {
-    const request = new DiscordRequest(
-      this,
-      { url, method: "DELETE" },
-      // DELETE SHOULD NOT HAVE A BODY
-      undefined,
-      reason
-    );
-
-    return await request.execute();
+    await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.botToken,
+        "X-Audit-Log-Reason": reason ? encodeURIComponent(reason) : "",
+      },
+    });
   }
 }
 
@@ -98,7 +105,7 @@ export interface RestManagerOptions {
   /** Whether or not to enable debug mode. */
   debug?: boolean;
   /** The base url to sent the requests to */
-  baseURL?: string;
+  baseURL: string;
 }
 
 export interface CreateChannelOptions {
