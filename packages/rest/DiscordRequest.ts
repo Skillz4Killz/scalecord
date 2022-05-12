@@ -4,10 +4,7 @@ export class DiscordRequest {
   /** The rest manager instance */
   manager: RestManager;
   /** The headers we will send for this request */
-  headers: Record<string, string> = {
-    "User-Agent":
-      "DiscordBot (https://github.com/Skillz4Killz/scalecord, 0.0.1)",
-  };
+  headers: Record<string, string> = {};
   /** The method being used to send the request */
   method: RequestMethod;
   /** The url to send the request */
@@ -24,10 +21,19 @@ export class DiscordRequest {
     this.manager = manager;
     this.url = options.url;
     this.method = options.method;
-    this.headers.Authorization = `Bot ${manager.token}`;
 
     if (reason) this.setReasonHeader(reason);
     if (payload) this.setBody(payload);
+  }
+
+  /** Generate the final form of headers to send. */
+  get generateHeaders() {
+    return {
+      ...this.headers,
+      "User-Agent":
+        "DiscordBot (https://github.com/Skillz4Killz/scalecord, 0.0.1)",
+      Authorization: `Bot ${this.manager.token}`,
+    };
   }
 
   /** Set the header for the reason, useful for audit logs. */
@@ -50,7 +56,7 @@ export class DiscordRequest {
     return await fetch(this.url, {
       method: this.method,
       body: this.body ? JSON.stringify(this.body) : undefined,
-      headers: this.headers,
+      headers: this.generateHeaders,
     })
       .then((response) => {
         // TODO: grafana metrics
