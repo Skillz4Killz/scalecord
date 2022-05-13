@@ -1,4 +1,4 @@
-packages/rest/test.ts
+packages/*/test.ts
 
 # Logs
 logs
